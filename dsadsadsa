@@ -1,0 +1,314 @@
+local Settings = {
+    Enabled = false,
+    BoxType = "Corner", -- Corner,Square
+    EspColor = Color3.fromRGB(255,0,0),
+    EspOutline = false,
+    Names = false,
+    Distance = false,
+    HealthBar = false
+}
+
+function CreateEsp(Player)
+   local Box,BoxOutline,Namess,Distancee,HealthBars,HealthBarsOutline,Line1,Line2,Line3,Line4,Line5,Line6,Line7,Line8,Line1Outline,Line2Outline,Line3Outline,Line4Outline,Line5Outline,Line6Outline,Line7Outline,Line8Outline = Drawing.new("Square"),Drawing.new("Square"),Drawing.new("Text"),Drawing.new("Text"),Drawing.new("Square"),Drawing.new("Square"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line"),Drawing.new("Line")
+   local Updater
+   Updater = game:GetService("RunService").RenderStepped:Connect(function()
+   if Player.Character ~= nil and Player.Character:FindFirstChild("Humanoid") ~= nil and Player.Character:FindFirstChild("HumanoidRootPart") ~= nil and Player.Character.Humanoid.Health > 0 and Player.Character:FindFirstChild("Head") ~= nil then
+           local Target2dPosition,IsVisible = workspace.CurrentCamera:WorldToViewportPoint(Player.Character.HumanoidRootPart.Position)
+           local dynamicsize = 1 / (Target2dPosition.Z * math.tan(math.rad(workspace.CurrentCamera.FieldOfView / 2)) * 2) * 1000
+           local Width,Height = math.floor(4 * dynamicsize), math.floor(6 * dynamicsize)
+            if IsVisible and Settings.Enabled and Credits == "rang#2415" then
+               Box.Thickness = 0
+               Box.Size = Vector2.new(Width,Height)
+               Box.Position = Vector2.new(math.floor(Target2dPosition.X - Box.Size.X / 2),math.floor(Target2dPosition.Y - Box.Size.Y / 2))
+               Box.Color = Settings.EspColor
+               Box.ZIndex = 69
+               
+               BoxOutline.Thickness = 3
+               BoxOutline.Size = Box.Size
+               BoxOutline.Position = Box.Position
+               BoxOutline.Color = Color3.fromRGB(0,0,0)
+               BoxOutline.ZIndex = 1
+               if Settings.BoxType == "Square" then
+                   Box.Visible = true
+                   if Settings.EspOutline then
+                       BoxOutline.Visible = true
+                   else
+                       BoxOutline.Visible = false
+                   end
+               else
+                   Box.Visible = false
+                   BoxOutline.Visible = false
+               end
+               if Settings.BoxType == "Corner" then
+                   local BoxCenter = Vector2.new(Box.Position.X + Box.Size.X / 2,Box.Position.Y + Box.Size.Y / 2)
+                   local TL = Vector2.new(BoxCenter.X - Box.Size.X / 2,BoxCenter.Y - Box.Size.Y / 2)
+                   local BL = Vector2.new(BoxCenter.X - Box.Size.X / 2,BoxCenter.Y + Box.Size.Y / 2)
+                   local TR = Vector2.new(BoxCenter.X + Box.Size.X / 2,BoxCenter.Y - Box.Size.Y / 2)
+                   local BR = Vector2.new(BoxCenter.X + Box.Size.X / 2,BoxCenter.Y + Box.Size.Y / 2)
+                   
+                   Line1.Visible = true
+                   Line1.From = TL
+                   Line1.To = Line1.From + Vector2.new(0,Box.Size.X/3)
+                   Line1.Thickness = 0
+                   Line1.Color = Settings.EspColor
+                   Line1.ZIndex = 69
+                   
+                   Line2.Visible = true
+                   Line2.From = TL
+                   Line2.To = Line2.From + Vector2.new(Box.Size.X/3,0)
+                   Line2.Thickness = 0
+                   Line2.Color = Settings.EspColor
+                   Line2.ZIndex = 69
+                   
+                   Line3.Visible = true
+                   Line3.From = TR
+                   Line3.To = Line3.From + Vector2.new(-Box.Size.X/3,0)
+                   Line3.Thickness = 0
+                   Line3.Color = Settings.EspColor
+                   Line3.ZIndex = 69
+                   
+                   Line4.Visible = true
+                   Line4.From = TR
+                   Line4.To = Line4.From + Vector2.new(0,Box.Size.X/3)
+                   Line4.Thickness = 0
+                   Line4.Color = Settings.EspColor
+                   Line4.ZIndex = 69
+                             
+                   Line5.Visible = true
+                   Line5.From = BR + Vector2.new(0,1)
+                   Line5.To = Line5.From + Vector2.new(0,-Box.Size.X/3)
+                   Line5.Thickness = 0
+                   Line5.Color = Settings.EspColor
+                   Line5.ZIndex = 69
+                   
+                   Line6.Visible = true
+                   Line6.From = BR
+                   Line6.To = Line6.From + Vector2.new(-Box.Size.X/3,0)
+                   Line6.Thickness = 0
+                   Line6.Color = Settings.EspColor
+                   Line6.ZIndex = 69
+                   
+                   Line7.Visible = true
+                   Line7.From = BL
+                   Line7.To = Line7.From + Vector2.new(0,-Box.Size.X/3)
+                   Line7.Thickness = 0
+                   Line7.Color = Settings.EspColor
+                   Line7.ZIndex = 69
+                   
+                   Line8.Visible = true
+                   Line8.From = BL
+                   Line8.To = Line8.From + Vector2.new(Box.Size.X/3,0)
+                   Line8.Thickness = 0
+                   Line8.Color = Settings.EspColor
+                   Line8.ZIndex = 69
+                   if Settings.EspOutline then
+                       Line1Outline.Visible = true
+                       Line1Outline.From = Line1.From + Vector2.new(0,-1)
+                       Line1Outline.To = Line1.To + Vector2.new(0,1)
+                       Line1Outline.Thickness = 3
+                       Line1Outline.Color = Color3.fromRGB(0,0,0)
+                       
+                       Line2Outline.Visible = true
+                       Line2Outline.From = Line2.From
+                       Line2Outline.To = Line2.To + Vector2.new(1,0)
+                       Line2Outline.Thickness = 3
+                       Line2Outline.Color = Color3.fromRGB(0,0,0)
+                       
+                       Line3Outline.Visible = true
+                       Line3Outline.From = Line3.From + Vector2.new(2,0)
+                       Line3Outline.To = Line3.To + Vector2.new(-1,0)
+                       Line3Outline.Thickness = 3
+                       Line3Outline.Color = Color3.fromRGB(0,0,0)
+                       
+                       Line4Outline.Visible = true
+                       Line4Outline.From = Line4.From
+                       Line4Outline.To = Line4.To + Vector2.new(0,1)
+                       Line4Outline.Thickness = 3
+                       Line4Outline.Color = Color3.fromRGB(0,0,0)
+                       
+                       Line5Outline.Visible = true
+                       Line5Outline.From = Line5.From
+                       Line5Outline.To = Line5.To + Vector2.new(0,-1)
+                       Line5Outline.Thickness = 3
+                       Line5Outline.Color = Color3.fromRGB(0,0,0)
+                       
+                       Line6Outline.Visible = true
+                       Line6Outline.From = Line6.From + Vector2.new(2,0)
+                       Line6Outline.To = Line6.To + Vector2.new(-1,0)
+                       Line6Outline.Thickness = 3
+                       Line6Outline.Color = Color3.fromRGB(0,0,0)
+                       
+                       Line7Outline.Visible = true
+                       Line7Outline.From = Line7.From
+                       Line7Outline.To = Line7.To + Vector2.new(0,-1)
+                       Line7Outline.Thickness = 3
+                       Line7Outline.Color = Color3.fromRGB(0,0,0)
+                       
+                       Line8Outline.Visible = true
+                       Line8Outline.From = Line8.From + Vector2.new(-1,0)
+                       Line8Outline.To = Line8.To + Vector2.new(1,0)
+                       Line8Outline.Thickness = 3
+                       Line8Outline.Color = Color3.fromRGB(0,0,0)
+                   else
+                       Line1Outline.Visible = false
+                       Line2Outline.Visible = false
+                       Line3Outline.Visible = false
+                       Line4Outline.Visible = false
+                       Line5Outline.Visible = false
+                       Line6Outline.Visible = false
+                       Line7Outline.Visible = false
+                       Line8Outline.Visible = false
+                   end
+               else
+                   Line1.Visible = false
+                   Line2.Visible = false
+                   Line3.Visible = false
+                   Line4.Visible = false
+                   Line5.Visible = false
+                   Line6.Visible = false
+                   Line7.Visible = false
+                   Line8.Visible = false
+                   Line1Outline.Visible = false
+                   Line2Outline.Visible = false
+                   Line3Outline.Visible = false
+                   Line4Outline.Visible = false
+                   Line5Outline.Visible = false
+                   Line6Outline.Visible = false
+                   Line7Outline.Visible = false
+                   Line8Outline.Visible = false
+               end
+                  if Settings.Names then
+                   Namess.Visible = true
+                   Namess.Position = Vector2.new(math.floor(Target2dPosition.X),math.floor(Target2dPosition.Y - Height * 0.5 + -15))
+                   Namess.Color = Settings.EspColor
+                   Namess.Font = 2
+                   Namess.Text = Player.Name
+                   Namess.Center = true
+                   Namess.OutlineColor = Color3.fromRGB(0,0,0)
+                   Namess.Outline = true
+                   Namess.Size = 13
+               else
+                   Namess.Visible = false
+               end
+               if Settings.Distance then
+                   Distancee.Visible = true
+                   Distancee.Position = Vector2.new(math.floor(Target2dPosition.X),math.floor(Target2dPosition.Y + Height * 0.5))
+                   Distancee.Color = Settings.EspColor
+                   Distancee.Font = 2
+                   Distancee.Text = math.floor((workspace.CurrentCamera.CFrame.p - Player.Character.HumanoidRootPart.Position).magnitude).."m"
+                   Distancee.Center = true
+                   Distancee.OutlineColor = Color3.fromRGB(0,0,0)
+                   Distancee.Outline = true
+                   Distancee.Size = 13
+                   Distancee.ZIndex = 1
+               else
+                   Distancee.Visible = false
+               end
+               if Settings.HealthBar then
+                   HealthBarsOutline.Visible = true
+                   HealthBarsOutline.Size = Vector2.new(3,BoxOutline.Size.Y + 2)
+                   HealthBarsOutline.Position = Box.Position + Vector2.new(-4,-1)
+                   HealthBarsOutline.Color = Color3.fromRGB(0,0,0)
+                   HealthBarsOutline.Thickness = 0
+                   HealthBarsOutline.Filled = true
+                   HealthBarsOutline.ZIndex = 1
+                  
+                   HealthBars.Visible = true
+                   HealthBars.Size = Vector2.new(1,-(HealthBarsOutline.Size.Y - 2) * (Player.Character.Humanoid.Health/Player.Character.Humanoid.MaxHealth))
+                   HealthBars.Position = HealthBarsOutline.Position + Vector2.new(1,-1 + HealthBarsOutline.Size.Y)
+                   HealthBars.Color = Color3.fromRGB(255,0,0):lerp(Color3.fromRGB(0,255,0),Player.Character.Humanoid.Health/Player.Character.Humanoid.MaxHealth)
+                   HealthBars.Thickness = 0
+                   HealthBars.Filled = true
+                   HealthBars.ZIndex = 2
+               else
+                   HealthBarsOutline.Visible = false
+                   HealthBars.Visible = false
+               end
+            else
+               HealthBarsOutline.Visible = false
+               HealthBars.Visible = false
+               Line1.Visible = false
+               Line2.Visible = false
+               Line3.Visible = false
+               Line4.Visible = false
+               Line5.Visible = false
+               Line6.Visible = false
+               Line7.Visible = false
+               Line8.Visible = false
+               Line1Outline.Visible = false
+               Line2Outline.Visible = false
+               Line3Outline.Visible = false
+               Line4Outline.Visible = false
+               Line5Outline.Visible = false
+               Line6Outline.Visible = false
+               Line7Outline.Visible = false
+               Line8Outline.Visible = false
+               Namess.Visible = false
+               Distancee.Visible = false
+               Box.Visible = false
+               BoxOutline.Visible = false
+            end
+        else
+            HealthBarsOutline.Visible = false
+            HealthBars.Visible = false
+            Line1.Visible = false
+            Line2.Visible = false
+            Line3.Visible = false
+            Line4.Visible = false
+            Line5.Visible = false
+            Line6.Visible = false
+            Line7.Visible = false
+            Line8.Visible = false
+            Line1Outline.Visible = false
+            Line2Outline.Visible = false
+            Line3Outline.Visible = false
+            Line4Outline.Visible = false
+            Line5Outline.Visible = false
+            Line6Outline.Visible = false
+            Line7Outline.Visible = false
+            Line8Outline.Visible = false
+            Namess.Visible = false
+            Distancee.Visible = false
+            Box.Visible = false
+            BoxOutline.Visible = false
+            if not Player then
+               HealthBarsOutline:Remove()
+               HealthBars:Remove()
+               Line1Outline:Remove()
+               Line2Outline:Remove()
+               Line3Outline:Remove()
+               Line4Outline:Remove()
+               Line5Outline:Remove()
+               Line6Outline:Remove()
+               Line7Outline:Remove()
+               Line8Outline:Remove()
+               Line1:Remove()
+               Line2:Remove()
+               Line3:Remove()
+               Line4:Remove()
+               Line5:Remove()
+               Line6:Remove()
+               Line7:Remove()
+               Line8:Remove()
+               Namess:Remove()
+               Distancee:Remove()
+               BoxOutline:Remove()
+               Box:Remove()
+               Updater:Disconnect()
+            end
+        end
+    end)     
+end
+
+for _,v in pairs(game:GetService("Players"):GetPlayers()) do
+   if v ~= game:GetService("Players").LocalPlayer then
+      CreateEsp(v)
+   end
+end
+
+game:GetService("Players").PlayerAdded:Connect(function(v)
+   if v ~= game:GetService("Players").LocalPlayer then
+      CreateEsp(v)
+   end
+end)
+return Settings
